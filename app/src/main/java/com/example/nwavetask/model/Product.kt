@@ -11,4 +11,4 @@ data class Product(
     var image_url: String,
     val name: String,
     val price: String,
-)
+) : java.io.Serializable

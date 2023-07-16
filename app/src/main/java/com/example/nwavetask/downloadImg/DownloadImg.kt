@@ -1,10 +1,10 @@
-package com.example.nwavetask.DownloadImg
+package com.example.nwavetask.downloadImg
 
-import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.example.nwavetask.R
+import com.example.nwavetask.model.Product
 
 @BindingAdapter("bind:imageUrl")
 fun loadImage(view: ImageView, imageUrl: String?) {

@@ -4,11 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.nwavetask.allProducts.Transaction
 import com.example.nwavetask.databinding.ProductItemBinding
 import com.example.nwavetask.model.ProductsModelItem
 
 
-class AllProductsAdapter(private var products : List<ProductsModelItem> ) : RecyclerView.Adapter<AllProductsAdapter.ViewHolder>() {
+class AllProductsAdapter(private var products : List<ProductsModelItem> , private val  transaction: Transaction) : RecyclerView.Adapter<AllProductsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding : ProductItemBinding = DataBindingUtil.inflate(
@@ -23,6 +24,7 @@ class AllProductsAdapter(private var products : List<ProductsModelItem> ) : Recy
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
        val productImg = products[position].Product.image_url.replace("http://", "https://")
         products[position].Product.image_url = productImg
+        holder.binding.transaction = transaction
       holder.binding.product =   products[position].Product
     }
 

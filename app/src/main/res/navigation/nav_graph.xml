@@ -7,5 +7,17 @@
     <fragment
         android:id="@+id/allProductsFragment"
         android:name="com.example.nwavetask.allProducts.AllProductsFragment"
-        android:label="AllProductsFragment" />
+        android:label="AllProductsFragment" >
+        <action
+            android:id="@+id/action_allProductsFragment_to_produuctDetailsFragment"
+            app:destination="@id/produuctDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/produuctDetailsFragment"
+        android:name="com.example.nwavetask.ProduuctDetailsFragment"
+        android:label="ProduuctDetailsFragment" >
+        <argument
+            android:name="productDetails"
+            app:argType="com.example.nwavetask.model.Product" />
+    </fragment>
 </navigation>
