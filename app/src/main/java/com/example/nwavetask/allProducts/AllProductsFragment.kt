@@ -1,4 +1,4 @@
-package com.example.nwavetask.AllProducts
+package com.example.nwavetask.allProducts
 
 import android.os.Bundle
 import android.view.LayoutInflater

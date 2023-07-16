@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/allProductsFragment"
-        android:name="com.example.nwavetask.AllProducts.AllProductsFragment"
+        android:name="com.example.nwavetask.allProducts.AllProductsFragment"
         android:label="AllProductsFragment" />
 </navigation>
