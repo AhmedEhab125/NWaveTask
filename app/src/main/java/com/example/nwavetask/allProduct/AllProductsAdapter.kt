@@ -1,10 +1,10 @@
-package com.example.nwavetask
+package com.example.nwavetask.allProduct
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.nwavetask.allProducts.Transaction
+import com.example.nwavetask.R
 import com.example.nwavetask.databinding.ProductItemBinding
 import com.example.nwavetask.model.ProductsModelItem
 

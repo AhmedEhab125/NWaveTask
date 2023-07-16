@@ -9,7 +9,7 @@
             type="com.example.nwavetask.model.Product" />
         <variable
             name="transaction"
-            type="com.example.nwavetask.allProducts.Transaction" />
+            type="com.example.nwavetask.allProduct.Transaction" />
 
     </data>
 

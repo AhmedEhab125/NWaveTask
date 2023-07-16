@@ -1,4 +1,4 @@
-package com.example.nwavetask.allProducts
+package com.example.nwavetask.allProduct
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
-import com.example.nwavetask.AllProductsAdapter
 import com.example.nwavetask.R
 import com.example.nwavetask.databinding.FragmentAllProductsBinding
 import com.example.nwavetask.model.Product

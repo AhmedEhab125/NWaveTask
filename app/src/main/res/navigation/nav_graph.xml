@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/allProductsFragment"
-        android:name="com.example.nwavetask.allProducts.AllProductsFragment"
+        android:name="com.example.nwavetask.allProduct.AllProductsFragment"
         android:label="AllProductsFragment" >
         <action
             android:id="@+id/action_allProductsFragment_to_produuctDetailsFragment"
@@ -14,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/produuctDetailsFragment"
-        android:name="com.example.nwavetask.ProduuctDetailsFragment"
+        android:name="com.example.nwavetask.productDetails.ProduuctDetailsFragment"
         android:label="ProduuctDetailsFragment" >
         <argument
             android:name="productDetails"
