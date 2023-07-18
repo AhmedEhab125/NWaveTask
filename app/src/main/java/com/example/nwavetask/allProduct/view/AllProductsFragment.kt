@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -44,17 +45,18 @@ class AllProductsFragment : Fragment(), Transaction {
 
     }
     fun getData(){
-        var state = "offline"
         if(NetworkListener.getConnectivity(requireContext())){
             allProductsViewModel.getProductsFromApi()
-           state = "online"
+            observeFromNetwork()
         }else{
             allProductsViewModel.getProductsFromDataBase()
+            observeFromDatabase()
+            Toast.makeText(requireContext(),"No Internet Connection",Toast.LENGTH_LONG).show()
         }
-        observeForProducts(state)
+
     }
 
-    fun  observeForProducts(state:String) {
+    fun  observeFromNetwork() {
         lifecycleScope.launch {
             allProductsViewModel.accessProductsData.collect { result ->
                 when (result) {
@@ -63,17 +65,10 @@ class AllProductsFragment : Fragment(), Transaction {
                     }
                     is ApiState.Success<*> -> {
                         binding.progressBar.visibility = View.GONE
-                        var productsList  = mutableListOf<ProductsModelItem>()
-                        if (state.equals("online")){
-                         productsList = (result.data as List<ProductsModelItem>).toMutableList()
-                        }else{
-                            val products = result.data as List<Product>
 
-                            products.forEach {
-                                productsList.add(ProductsModelItem(it, listOf()))
-                            }
 
-                        }
+                       val  productsList = result.data as List<ProductsModelItem>
+
                         adapter.setProducts(productsList)
                     }
                     is ApiState.Failure -> {
@@ -86,7 +81,32 @@ class AllProductsFragment : Fragment(), Transaction {
         }
 
     }
+    fun observeFromDatabase() {
+        lifecycleScope.launch {
+            allProductsViewModel.accessLocalProductsData.collect { result ->
+                when (result) {
+                    is ApiState.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is ApiState.Success<*> -> {
+                        binding.progressBar.visibility = View.GONE
+                        val productsList = result.data as List<Product>
+                        var products = mutableListOf<ProductsModelItem>()
+                        productsList.forEach {
+                            products.add(ProductsModelItem(it, listOf()))
+                        }
+                        adapter.setProducts(products)
+                    }
+                    is ApiState.Failure -> {
+                        binding.progressBar.visibility = View.GONE
 
+                    }
+                }
+
+            }
+        }
+
+    }
 
     override fun moveToDetailsScreen(product: Product) {
         val bundle = Bundle().apply {
