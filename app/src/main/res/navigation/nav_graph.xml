@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/allProductsFragment"
-        android:name="com.example.nwavetask.allProduct.AllProductsFragment"
+        android:name="com.example.nwavetask.allProduct.view.AllProductsFragment"
         android:label="AllProductsFragment" >
         <action
             android:id="@+id/action_allProductsFragment_to_produuctDetailsFragment"

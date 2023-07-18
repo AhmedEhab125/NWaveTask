@@ -1,4 +1,4 @@
-package com.example.nwavetask.allProduct
+package com.example.nwavetask.allProduct.view
 
 import com.example.nwavetask.model.Product
 
