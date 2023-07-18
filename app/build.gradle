@@ -90,4 +90,9 @@ dependencies {
 
     //material Design
     implementation 'com.google.android.material:material:1.8.0'
+    // lotti
+    def lottieVersion = "3.4.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
+    // sweep refresh
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
 }
