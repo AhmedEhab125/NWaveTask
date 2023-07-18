@@ -42,37 +42,47 @@ class AllProductsFragment : Fragment(), Transaction {
         adapter = AllProductsAdapter(listOf(), this)
         binding.mAdapter = adapter
         getData()
-
+        onRefresh()
     }
-    fun getData(){
-        if(NetworkListener.getConnectivity(requireContext())){
+
+    fun getData() {
+        if (NetworkListener.getConnectivity(requireContext())) {
             allProductsViewModel.getProductsFromApi()
             observeFromNetwork()
-        }else{
+        } else {
             allProductsViewModel.getProductsFromDataBase()
             observeFromDatabase()
-            Toast.makeText(requireContext(),"No Internet Connection",Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "No Internet Connection", Toast.LENGTH_LONG).show()
         }
 
     }
 
-    fun  observeFromNetwork() {
+    fun observeFromNetwork() {
         lifecycleScope.launch {
             allProductsViewModel.accessProductsData.collect { result ->
+                binding.swiperefresh.isRefreshing = false
                 when (result) {
+
                     is ApiState.Loading -> {
+                        binding.recyclerView.visibility=View.GONE
                         binding.progressBar.visibility = View.VISIBLE
                     }
                     is ApiState.Success<*> -> {
                         binding.progressBar.visibility = View.GONE
 
 
-                       val  productsList = result.data as List<ProductsModelItem>
+                        val productsList = result.data as List<ProductsModelItem>
+                        if (productsList.isEmpty())
+                            binding.lottieSplash.visibility = View.VISIBLE
+                        else
+                            binding.lottieSplash.visibility = View.GONE
 
                         adapter.setProducts(productsList)
+                        binding.recyclerView.visibility=View.VISIBLE
                     }
                     is ApiState.Failure -> {
                         binding.progressBar.visibility = View.GONE
+                        Toast.makeText(requireContext(), "Some thing went wrong", Toast.LENGTH_LONG).show()
 
                     }
                 }
@@ -81,32 +91,28 @@ class AllProductsFragment : Fragment(), Transaction {
         }
 
     }
+
     fun observeFromDatabase() {
         lifecycleScope.launch {
             allProductsViewModel.accessLocalProductsData.collect { result ->
-                when (result) {
-                    is ApiState.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
-                    }
-                    is ApiState.Success<*> -> {
-                        binding.progressBar.visibility = View.GONE
-                        val productsList = result.data as List<Product>
-                        var products = mutableListOf<ProductsModelItem>()
-                        productsList.forEach {
-                            products.add(ProductsModelItem(it, listOf()))
-                        }
-                        adapter.setProducts(products)
-                    }
-                    is ApiState.Failure -> {
-                        binding.progressBar.visibility = View.GONE
-
-                    }
+                binding.swiperefresh.isRefreshing = false
+                binding.progressBar.visibility = View.GONE
+                var products = mutableListOf<ProductsModelItem>()
+                for (product in  result ){
+                var productItem =ProductsModelItem(product, listOf())
+                    products.add(productItem)
                 }
+                if (products.isEmpty())
+                    binding.lottieSplash.visibility = View.VISIBLE
+                else
+                    binding.lottieSplash.visibility = View.GONE
+                adapter.setProducts(products)
 
             }
-        }
 
+        }
     }
+
 
     override fun moveToDetailsScreen(product: Product) {
         val bundle = Bundle().apply {
@@ -114,6 +120,11 @@ class AllProductsFragment : Fragment(), Transaction {
         }
         Navigation.findNavController(requireView())
             .navigate(R.id.action_allProductsFragment_to_produuctDetailsFragment, bundle)
+    }
+    fun onRefresh(){
+        binding.swiperefresh.setOnRefreshListener {
+            getData()
+        }
     }
 
 
