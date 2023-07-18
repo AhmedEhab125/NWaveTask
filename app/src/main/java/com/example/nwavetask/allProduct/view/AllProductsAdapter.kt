@@ -20,6 +20,10 @@ class AllProductsAdapter(private var products : List<ProductsModelItem> , privat
             )
        return ViewHolder(binding)
     }
+    fun setProducts( products : List<ProductsModelItem>){
+        this.products=products
+        notifyDataSetChanged()
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
        val productImg = products[position].Product.image_url.replace("http://", "https://")
